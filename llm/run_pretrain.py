@@ -460,6 +460,7 @@ def main():
     config.attention_probs_dropout_prob = model_args.attention_probs_dropout_prob
 
     config.sep_parallel_degree = training_args.sep_parallel_degree
+    config.num_key_value_heads = 4
     if config.sequence_parallel:
         assert config.tensor_parallel_degree > 1, "tensor_parallel_degree must be larger than 1 for sequence parallel."
     assert (
@@ -496,6 +497,7 @@ def main():
                 model_args.model_name_or_path,
                 config=config,
                 dtype=dtype,
+                ignore_mismatched_sizes = True
             )
     else:
         model = model_class.from_config(config, dtype=dtype)
